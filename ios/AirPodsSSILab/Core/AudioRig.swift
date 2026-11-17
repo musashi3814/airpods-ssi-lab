@@ -42,7 +42,7 @@ struct AudioSessionConfig: Identifiable, Codable, Hashable {
             }
             return ([.allowBluetoothA2DP], false)
         case .hfp:
-            return ([.allowBluetooth], false)
+            return ([.allowBluetoothHFP], false)
         case .builtInMic:
             return ([.allowBluetoothA2DP], false)
         }
