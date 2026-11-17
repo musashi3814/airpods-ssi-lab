@@ -1,0 +1,33 @@
+name: iOS build
+
+on:
+  push:
+    paths: ["ios/**", ".github/workflows/ios-build.yml"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 26
+        run: |
+          ls -d /Applications/Xcode*.app
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then XC=$(ls -d /Applications/Xcode*.app | sort -V | tail -1); fi
+          echo "Using $XC"
+          sudo xcode-select -s "$XC"
+          xcodebuild -version
+      - name: Generate project
+        run: |
+          brew install xcodegen
+          cd ios && xcodegen generate
+      - name: Build (no signing)
+        run: |
+          cd ios
+          set -o pipefail
+          xcodebuild -project AirPodsSSILab.xcodeproj -scheme AirPodsSSILab \
+            -sdk iphoneos -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build | tee build.log | grep -E "error:|warning: .*(deprecated|never)|BUILD" || true
+          grep -q "BUILD SUCCEEDED" build.log

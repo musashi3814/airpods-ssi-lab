@@ -1,0 +1,35 @@
+name: AirPodsSSILab
+options:
+  bundleIdPrefix: com.example.ssilab
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: ""          # Xcode の Signing & Capabilities で自分のチームを選ぶ
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1"
+    SWIFT_OPTIMIZATION_LEVEL: "-O" # DSP を Debug でも実用速度で回すため
+targets:
+  AirPodsSSILab:
+    type: application
+    platform: iOS
+    sources:
+      - AirPodsSSILab
+    info:
+      path: AirPodsSSILab/Info.plist
+      properties:
+        CFBundleDisplayName: SSI Lab
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        NSMicrophoneUsageDescription: AirPods のマイク信号がサイレントスピーチに使えるかを測定します。
+        NSMotionUsageDescription: AirPods のモーション信号が口の動きを捉えるかを測定します。
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UIBackgroundModes: [audio]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.ssilab.AirPodsSSILab
+        INFOPLIST_FILE: AirPodsSSILab/Info.plist
+        GENERATE_INFOPLIST_FILE: NO

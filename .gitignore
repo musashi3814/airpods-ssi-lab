@@ -1,0 +1,13 @@
+.DS_Store
+# XcodeGen が project.yml から生成する
+ios/*.xcodeproj
+ios/AirPodsSSILab/Info.plist
+ios/build/
+xcuserdata/
+DerivedData/
+# 実験データ
+runs/
+*.pklg
+*.btsnoop
+__pycache__/
+out/
